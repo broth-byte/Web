@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask the AI</title>
+<style>
+body { font-family: Arial; background: #f0f0f0; text-align: center; padding: 40px; }
+textarea { width: 80%; height: 80px; border-radius: 10px; padding: 10px; }
+button { padding: 10px 20px; margin-top: 10px; border-radius: 8px; cursor: pointer; }
+#response { margin-top: 20px; font-weight: bold; }
+</style>
+</head>
+<body>
+<h2>💬 Ask the AI</h2>
+<textarea id="question" placeholder="Type your question..."></textarea><br>
+<button onclick="askAI()">Ask</button>
+<p id="response"></p>
+
+<script>
+async function askAI() {
+  const question = document.getElementById("question").value;
+  document.getElementById("response").innerText = "Thinking...";
+  const res = await fetch("https://ai-web.onrender.com/ask", {  // your Render URL
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({question})
+  });
+  const data = await res.json();
+  document.getElementById("response").innerText = data.answer || data.error;
+}
+</script>
+</body>
+  </html>
+  
